@@ -24,8 +24,8 @@ async function startApolloServer(typeDefs, resolvers) {
 
   app.get('*', (req, res) => res.status(404).send('Page Not Found'))
 
-  await new Promise(resolve => httpServer.listen({ port: 4000 }, resolve));
-  console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}  `);
+  await new Promise(resolve => httpServer.listen({ port: 3000 }, resolve));
+  console.log(`🚀 Server ready at http://localhost:3000${server.graphqlPath}  `);
 }
 
 startApolloServer(typeDefs, resolvers)

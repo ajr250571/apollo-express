@@ -3,17 +3,20 @@ generator client {
 }
 
 generator graphql {
-  provider = "graphql-schema-generator"
+  provider   = "graphql-schema-generator"
   createCRUD = "true"
-  output = "./generated"
+  output     = "./generated"
 }
+
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
-model Task {
-  id          Int     @id @default(autoincrement())
-  title       String
-  description String?
+model User {
+  id       Int     @id @default(autoincrement())
+  email    String  @unique
+  name     String?
+  theme    String?
+  password String
 }

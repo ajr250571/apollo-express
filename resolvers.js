@@ -1,60 +1,31 @@
-import { PrismaClient } from '@prisma/client'
-
-const prisma = new PrismaClient()
+import { Users, ValidUser, CreateUser, User, UpdateUser, DeleteUser } from "./services/user.service.js";
 
 export const resolvers = {
   Query: {
-    taskFindMany: async () => {
-      const tasks = await prisma.task.findMany()
-      return tasks
+
+    users: async () => {
+      return await Users()
     },
-    taskFindUnique: async (_, args) => {
-      const { id } = args
-      const task = await prisma.task.findUnique({
-        where: {
-          id: Number(id),
-        }
-      })
-      return task
-    }
+    user: async (_, { id }) => {
+      return await User(id)
+    },
+    validUser: async (_, { email, password }) => {
+      return await ValidUser(email, password)
+    },
+
   },
   Mutation: {
-    // params, args, context, info
 
-    taskCreate: async (_, args) => {
-      try {
-        const { title, description } = args.task
-        const Task = await prisma.task.create({
-          data: {
-            title,
-            description
-          }
-        })
-        return Task
-      } catch (error) {
-        throw Error(error.code)
-      }
+    // User
+    createUser: async (_, { user }) => {
+      return await CreateUser(user)
     },
-    taskDelete: async (_, args) => {
-      try {
-        const task = await prisma.task.delete({
-          where: {
-            id: Number(args.id)
-          }
-        })
-        return { code: '200', message: 'Deleted' }
-      } catch (error) {
-        return { code: error.code, message: error.meta.cause }
-      }
+    updateUser: async (_, { id, user }) => {
+      return await UpdateUser(id, user)
     },
-    taskUpdate: async (_, { id, task }) => {
-      const taskUpdated = await prisma.task.update({
-        where: {
-          id: Number(id),
-        },
-        data: task,
-      })
-      return taskUpdated
+    deleteUser: async (_, { id }) => {
+      return await DeleteUser(id)
     }
+
   }
 }

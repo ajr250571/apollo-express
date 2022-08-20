@@ -7,28 +7,34 @@ Do not make changes to this file directly.
 Read more about in https://github.com/prisma-korea/graphql-schema-generator.
 """
 type Query {
-  task(id: ID!): Task
-  tasks: [Task!]!
+  user(id: ID!): User
+  users: [User!]!
 }
 
-input TaskCreateInput {
-  title: String!
-  description: String
+input UserCreateInput {
+  email: String!
+  name: String
+  theme: String
+  password: String!
 }
 
-input TaskUpdateInput {
-  title: String
-  description: String
+input UserUpdateInput {
+  email: String
+  name: String
+  theme: String
+  password: String
 }
 
 type Mutation {
-  createTask(task: TaskCreateInput!): Task
-  updateTask(task: TaskUpdateInput!): Task
-  deleteTask(id: ID!): Task
+  createUser(user: UserCreateInput!): User
+  updateUser(user: UserUpdateInput!): User
+  deleteUser(id: ID!): User
 }
 
-type Task {
+type User {
   id: ID!
-  title: String!
-  description: String
+  email: String!
+  name: String
+  theme: String
+  password: String!
 }
